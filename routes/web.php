@@ -27,7 +27,11 @@ Route::get('/create_tournament', [RefereeController::class, 'create_tournament']
     ->name('create_tournament');
 Route::get('/view_tournament/{id}', [TournamentController::class, 'view_tournament'])
     ->name('view_tournament');
+Route::get('/tournament_logs/{id}', [TournamentController::class, 'tournament_logs'])
+    ->name('tournament_logs');
 
 /*ajax*/
 Route::get('/get_people', [PeoplesController::class, 'get_people'])
     ->name('get_people');
+Route::get('/start_tournament/{id}', [TournamentController::class, 'start_tournament'])
+    ->name('start_tournament');

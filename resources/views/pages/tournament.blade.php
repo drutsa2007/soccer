@@ -7,20 +7,31 @@
     <hr>
     События:<br/>
     @foreach ($tour->logs as $l)
-        {{ $l->text }}<br/>
+        <div class="events">{{ $l->text }}</div>
     @endforeach
-    <div id="texts">12</div>
 
     <script>
-        let el = document.getElementById('texts')
+        //let el = document.getElementById('texts')
+        let el = document.getElementsByClassName('events')
+        //let last_id = el.getAttribute('id').split('-')[1]
         let t
-        let a = setTimeout(() => {
-            fetch('{{ route('get_people') }}')
+        let a = setInterval(() => {
+            fetch('{{ route('start_tournament', $tour->id) }}')
                 .then((response) => {
                     response.text()
                         .then((text) => {
-                            t = el.innerText;
-                            el.innerText = t + '\n' + text;
+                            console.log(text)
+                            let newWrapper = document.createElement('div');
+                            newWrapper.classList.add('events');
+                            newWrapper.innerText = text
+                            el[el.length - 1].after(newWrapper);
+                            if (text==="Остановить матч!") {
+                                let linkBack = document.createElement('a');
+                                linkBack.setAttribute('href', '{{ route('home') }}');
+                                linkBack.innerText = "Закончить"
+                                el[el.length - 1].after(linkBack);
+                                clearInterval(a);
+                            }
                         })
                 });
         }, 1000)

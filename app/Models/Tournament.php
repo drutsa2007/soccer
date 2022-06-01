@@ -32,4 +32,9 @@ class Tournament extends Model
         return $this->hasMany(TournamentLog::class);
     }
 
+    public function referee()
+    {
+        return $this->belongsTo(Referee::class);
+    }
+
 }

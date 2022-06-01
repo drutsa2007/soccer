@@ -27,9 +27,29 @@ class RefereeController extends Controller
         ]);
         TournamentLog::create([
             'tournament_id' => $tour->id,
-            'text' => 'Матч начался',
+            'text' => 'Начать матч!',
         ]);
         return redirect()->route('view_tournament', $tour->id);
+    }
+
+    static function card($id)
+    {
+        $tour = Tournament::find($id);
+        $card = mt_rand(0, 1);
+        if ($card == 0) {
+            $text = "Рефери ".$tour->referee->peoples->name." показал желтую карточку.";
+        }
+        else {
+            $text = "Рефери ".$tour->referee->peoples->name." показал красную карточку.";
+        }
+        return $text;
+    }
+
+    static function kick($id)
+    {
+        $tour = Tournament::find($id);
+        $text = "Рефери ".$tour->referee->peoples->name." назначил штрафной.";
+        return $text;
     }
 
 }
